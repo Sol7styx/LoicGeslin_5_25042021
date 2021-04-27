@@ -1,0 +1,47 @@
+.headerbanner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.allCameras {
+    display: flex;
+    justify-content: center;
+
+}
+.main {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.products {
+    border: black 1px solid;
+    
+}
+.cameraimage {
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+
+}
+.containercamera {
+    display: flex;
+    flex-flow: wrap ;
+
+}
+.products {
+    width: 300px;
+    display: flex;
+    flex-flow: column wrap;
+    margin: 0;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.allCameras {
+    width: 100%;
+}
+.allCameras h1 {
+    justify-content: center;
+}
