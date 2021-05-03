@@ -1,7 +1,35 @@
-.headerbanner {
+body {
+    font-family: Ubuntu, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+* {
+    box-sizing: border-box;
+}
+header {
     display: flex;
-    justify-content: space-around;
     align-items: center;
+    justify-content: space-around;
+    background-color: #F3E9F1;  
+}
+.headerlogo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+header a {
+    text-decoration: none;
+    font-size: 1.4em;  
+}
+.logo {
+    width: 10em;
+    height: auto;
+    padding-left: 10px;
+    margin-right: 50px;
+}
+.fas {
+    padding-right: 10px;
+    padding-left: 10px;
 }
 .allCameras {
     display: flex;
@@ -15,33 +43,73 @@
 }
 .products {
     border: black 1px solid;
-    
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 10px #f2f2f2, 0px 0px 10px #a9a9a9;    
 }
 .cameraimage {
     width: 100%;
     background-position: center;
     background-size: cover;
+    border-radius: 20px 20px 0 0;
+    padding: 5px 5px 0 5px;
 
 }
 .containercamera {
     display: flex;
     flex-flow: wrap ;
-
 }
 .products {
-    width: 300px;
+    width: 30%;
     display: flex;
     flex-flow: column wrap;
-    margin: 0;
+    margin: 20px;
+    align-items: center;
 }
+.products h2 {
+    margin: 5px;
+}
+.detailsbutton {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 30px;
+    background:#F3E9F1;
+    box-shadow: 0 0.5rem 0.5rem $mediumgray;
+    transition: ease-in-out 0.5s;
+}
+.detailsbutton:hover {
+    filter: brightness(120%);
+    box-shadow: 0 0 10px #000, 0 0 30px #777 ;
+}
+.detailsbutton a {
+    text-decoration: none;
+}
+
 .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
 .allCameras {
     width: 100%;
 }
 .allCameras h1 {
     justify-content: center;
+}
+footer {
+    display: flex;
+    background-color:#262626 ;
+}
+footer ul {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    list-style-type:none;
+}
+.footerlinks a {
+    text-decoration: none;
+    color: white;
+    
 }

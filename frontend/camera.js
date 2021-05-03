@@ -3,3 +3,4 @@ class Camera{
         jsonCamera && Object.assign(this, jsonCamera);
     }
 }
+
