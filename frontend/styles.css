@@ -110,6 +110,28 @@ footer ul {
 }
 .footerlinks a {
     text-decoration: none;
-    color: white;
-    
+    color: white;  
+}
+
+/* Page Product*/
+.productcontainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.cameraphoto {
+    width: 30em;
+}
+.cameraphoto >* {
+    border-radius: 20px;
+}
+
+/* Page panier */
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.imageCard {
+    width: 10em;
 }

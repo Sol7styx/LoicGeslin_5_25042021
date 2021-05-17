@@ -2,23 +2,19 @@
 
 //Récupération de la chaîne de requête dans l'url
 const queryString_url_id = window.location.search;
-console.log(queryString_url_id);
 
 //extraire l'id
 const urlSearchParams = new URLSearchParams(queryString_url_id);
-console.log(urlSearchParams);
 
 const id = urlSearchParams.get("id")
-console.log(id);
 
-main()
 
 async function main() {
     const camera = await getCamera()
     displayCamera(camera)
 }
 function getCamera() {
-    return fetch('http://localhost:3000/api/cameras/${id}')
+    return fetch('http://localhost:3000/api/cameras/' + id )
         .then(function(response){
             return response.json()
         })
@@ -29,116 +25,104 @@ function getCamera() {
             alert(error)
         })
 }
-function displayCamera() {
-    document.getElementById("main").innerHTML += `
-    <h2>Card</h2>
-    <div class="cameracard">
-        <img alt="" class="" src="${camera.imageUrl}>
-    </div>
-    
-    `;
-}
-//const addHtml = document.getElementById("content");
-//const searchParams = new URLSearchParams(window.location.search);
 
+function displayCamera(camera) {
 
-//id du produit dans le fetch
-/*fetch(`http://localhost:3000/api/cameras/${searchParams.get("id")}`) //récupérer la source située à l'adresse url
-        .then( data => data.json ) //quand c'est fait, exécuter la fonction   
-        .then( displayProduct => {
-            let camera = new Camera(jsonCamera);
-            document.querySelector(".container").innerHTML += `<article id=products" class="products">
-                                                                    <img class="cameraimage" src="${camera.imageUrl}" alt="photo de l'appareil ${camera.name}">
-                                                                    <h2 id="cameras_name" class="cameras_name">${camera.name}</h2>
-                                                                    <p id="cameras_price" class="cameras_price">${camera.price / 100} €</p>
-                                                                    <div class="detailsbutton">
-                                                                        <a href="product.html?id${camera._id}">Pour plus de détails</a>
-                                                                    </div>
-                                                                </article>`;
-        })
-        */
-
-/*injecte l'id du produit dans le fetch
-function afficheUnProduit (){
-fetch(`http://localhost:3000/api/cameras/${objectId.get("id")}`)
-    .then((response) => {
-        // me renvoie une première prommesse
-        if (response.ok) {
-            return (data = response.json()); // Si response ok, retourne un objet json
-        } else {
-            Promise.reject(response.status); // sinon, me retroune la cause de l'echec
-        }
-    })
-    .then((data) => {
-        console.log(data)
-        //variable prix pour le diviser par 100
-        let priceProdUnit = data.price / 100;
-        //variable vide pour les lentilles
-        let lens = "";
-        //boucle pour selectionner la lentille
-        data.lenses.forEach((lentille) => {
-            lens += `<option value="${lentille}">${lentille}</option>`;
-        });
-        //Insertion du HTML dans le DOM
-        //Interpolation de variable
-        addHtml.innerHTML += `
-                <div class="card produit">
-                    <img alt="${data.name}" class="content__img" src="${data.imageUrl}">
-                </div>
-                <div class="card produit">
-                    <h2 class="name">${data.name}</h2>
-                    <p class="description">${data.description}</p>
-                    <form>
-                        <label class="text" for="quantiteProduit">Quantité</label>
-                        <input id ="quantiteProduit" type="number" min="1" value="1"/>
-                            <div>
-                                <label class="text" for="lensSelect">Objectifs</label>
-                                <select class="" id="lensSelect">
-                                    ${lens}   
-                                </select>        
-                            </div>
-                        <p class="price">Prix total : <span id="totalPrice">${priceProdUnit}</span> €</p>
-                        <button id="btnAjoutId" type="button" class="btn-success">Ajouter au panier</button>                       
-                    </form>   
-                </div>
-                `;
-               
-        //calcul pour le prix total
-        calculePrice(priceProdUnit);
-        //écoute le bouton
-        const btnAjout = document.getElementById("btnAjoutId");
-
-        btnAjout.addEventListener("click", () => {
-            let lensElm = document.getElementById("lensSelect");
-            let quantityElm = document.getElementById("quantiteProduit");
-            //variable qui contient un objet avec les propriétés (clé et valeur)
-            let objetCam = {
-                _id: data._id,
-                image: data.imageUrl,
-                name: data.name,
-                lens: lensElm.value,
-                quantite: quantityElm.value,
-                totalPrice: (data.price * parseInt(quantityElm.value)) / 100,
-                price: data.price / 100,
-            };
-            //On passe en argument de la fonction mon objet
-            ajoutLocalStorage(objetCam);
-        });      
-        
-    });  
-}
-afficheUnProduit();
-/** 
-/**Fonction pour calculer le prix total en fonction de la quantité
- * 
- * @param {objet} priceProdUnit - prix unitaire
- * 
- */
-/*function calculePrice(priceProdUnit) {
-    let quantites = document.getElementById("quantiteProduit");
-    quantites.addEventListener("change", (event) => {
-        const result = document.getElementById("totalPrice");
-        result.textContent = `${priceProdUnit}` * `${event.target.value}`;
+    let priceProduct = camera.price / 100;
+    let optionLens="";
+    camera.lenses.forEach((lens) => {
+    optionLens = optionLens + `<option value="${lens}">${lens}</option>`;
     });
+
+
+    document.getElementById("productcontainer").innerHTML += `
+        <div class="cameraphoto">
+            <img class="cameraimage" src="${camera.imageUrl}" alt="photo de l'appareil"> 
+        </div>
+
+        <div class="productsheet">
+            <h2 class="productname">${camera.name}</h2>
+            <h3 class="unitProductPrice">Prix unitaire : ${priceProduct} €</h3>
+            <p class="productdescription">${camera.description}</p>
+            <form>
+                <label class="text" for="productAmount">Quantité</label>
+                <input id="productAmount" type="number" min="1" value="1"/>
+                <div>
+                    <label class="text" for="lensSelect">Objectifs</label>
+                    <select class="lensSelect" id="lensSelect">
+                        ${optionLens}
+                    </select>
+                </div>
+                <p class="selectionprice">Prix total : <spans id="totalSelectionPrice">${priceProduct}</spans> €</p>
+                <button id="addcart" type="submit" class="addcart">Ajouter au Panier</button>
+            </form>                    
+            </div>
+        </div>`;
+
+        totalProductPrice(priceProduct);
+        function totalProductPrice(priceProduct) {
+            let amount = document.getElementById("productAmount");
+            amount.addEventListener("change", (event) => {
+                const result = document.getElementById("totalSelectionPrice");
+                result.textContent = `${priceProduct}` * `${event.target.value}`;
+            });
+        }
+        //Récupération des données sélectionnées par l'utilisateur et envoie au panier
+        //Choix de la lentille par l'utilisateur et des quantités dans les variables
+        let lensChoice = document.getElementById("lensSelect");
+        let productQuantity = document.getElementById("productAmount");
+        
+        //Sélection du bouton Ajouter au Panier
+        const btn_addcart = document.getElementById("addcart");
+        
+        //Ecouter le bouton et envoyer le panier
+        btn_addcart.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            //Récupération des valeurs du formulaire
+        let detailsCam = {
+            idCamera: camera._id,
+            image: camera.imageUrl,
+            name: camera.name,
+            price: camera.price / 100,
+            lens: lensChoice.value,
+            quantity: productQuantity.value,
+            totalPrice: (camera.price * parseInt(productQuantity.value)) / 100,
+        }
+        console.log(detailsCam);
+
+        //Local Storage
+        //fenêtre popup 
+        const popupConfirmation = () =>{
+            if(window.confirm(`${camera.name} option: ${lensChoice.value} a bien été ajouté au panier
+OK pour aller au panier ANNULER pour revenir à l'accueil`)){
+            window.location.href = "cart.html";
+            }else{
+                window.location.href = "index.html";
+            }
+        }
+        //fonction pour ajouter un produit dans le localStorage
+        const addProductInLocalStorage = () => {
+            productInLocalStorage.push(detailsCam); //Ajout dans le tableau de l'objet avec les values choisies
+            //Transformation en JSON, puis envoie dnas la key "productList" du local Storage
+            localStorage.setItem("productList", JSON.stringify(productInLocalStorage)); 
+        };
+        //Vérifions si le local storage contient des données (prductsInLocalStorage)
+        let productInLocalStorage = JSON.parse(localStorage.getItem("productList"));
+        //JSON.parse pour convertir les données au format JSON qui sont dans le local storage en objet JavaScript
+        if(productInLocalStorage){ //Si pas de produit dans le loca storage
+            addProductInLocalStorage();
+            popupConfirmation();
+        }
+        else{
+            productInLocalStorage = [];
+            addProductInLocalStorage();
+            popupConfirmation();
+        }
+
+        });
+        
 }
-*/
+/*fonction auto appellée*/
+/*Requête API*/
+main()
