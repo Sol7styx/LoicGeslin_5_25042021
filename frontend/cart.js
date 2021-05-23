@@ -104,34 +104,7 @@ if(productsCart === null || productsCart == 0 ){
         `;
 };
 
-/*
-//--Formulaire
-//Sélection du bouton envoyer le formulaire
-const btnSendForm = document.querySelector("#btnForm");
 
-btnSendForm.addEventListener("click", (e)=>{
-e.preventDefault();
-//Récupération des valeurs du formulaire pour les mettre dans le local storage
-const contact = {
-    firstName : document.querySelector("#prenom").value,
-    lastName : document.querySelector("#nom").value,
-    mail : document.querySelector("#email").value,
-    address : document.querySelector("#adresse").value,
-    city : document.querySelector("#ville").value,  
-}
-*/
-//--Gestion validation du formulaire
-
-
-/*localStorage.setItem("contact", JSON.stringify(contact));
-//Mettre les values du formulaire et mettre les produits sélectionnés dans un objet à envoyer vers le serveur
-const sendToServer = {
-    contact,
-    products
-}
-console.log("sendToServer");
-console.log(sendToServer);
-*/
 
 //POST pour l'envoie du contact et du tableau d'achats
 const sendOrderRequest = async function (sendToServer) {
