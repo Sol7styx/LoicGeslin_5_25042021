@@ -1,5 +1,5 @@
 //déclaration variable productInLocalStorage dans laquelle on met les key et les values qui sont dans le local storage
-let products = JSON.parse(localStorage.getItem("productList"));
+let productsCart = JSON.parse(localStorage.getItem("productList"));
 
 
 
@@ -10,7 +10,7 @@ const totalPriceHtml = document.getElementById("totalCart");
 const btnEmptyCart = document.getElementById("emptyallcart");
 const finalPrice = document.getElementById("totalPriceCart");
 
-if(products === null || products == 0 ){
+if(productsCart === null || productsCart == 0 ){
     //Html panier vide
     addHtml.innerHTML = `
         <div class="emptycard">
@@ -19,7 +19,7 @@ if(products === null || products == 0 ){
         </div>`;
 } else {
     //on crée une boucle pour parcourir les éléments du tableau et générer le HTML
-    products.forEach((objet) => {
+    productsCart.forEach((objet) => {
         addHtml.innerHTML += `
             <div class="card" id="card">
                 <div class="cardimage">
@@ -48,16 +48,16 @@ if(products === null || products == 0 ){
         btnremove[a].addEventListener("click" , (event) =>{
             event.preventDefault(); //pour éviter que le click sur le bouton supprimer ne recharge la page
 
-            let removeId = products[a].idCamera && products[a].lens;
+            let removeId = productsCart[a].idCamera && productsCart[a].lens;
             console.log("removeId");
             console.log(removeId);
             //méthode filter
-            products = products.filter( el => (el.idCamera && el.lens)  !== removeId);
-            console.log(products);
+            productsCart = productsCart.filter( el => (el.idCamera && el.lens)  !== removeId);
+            console.log(productsCart);
 
             //on envoie la variable dans le local Storage 
             //transformation en format JSON et envoie dans la key "productList" du localStorage
-            localStorage.setItem("productList", JSON.stringify(productInLocalStorage));
+            localStorage.setItem("productList", JSON.stringify(productsCart));
 
             //avertir que le produit a été supprimé et rechargement de la page
             alert("Confirmation de la suppression de cet article");
@@ -86,8 +86,8 @@ if(products === null || products == 0 ){
     //Déclaration de la variable pour pouvoir y mettre les prix qui sont présents dans le panier
     let calculFinalPrice = [];
     //--Récupérer les prix dans le panier--
-    for (let x = 0; x < products.length; x++){
-        let cartPrices = products[x].totalPrice;
+    for (let x = 0; x < productsCart.length; x++){
+        let cartPrices = productsCart[x].totalPrice;
 
     //--mettre les prix dans le tableau contenu par la variable calculFinalPrice
         calculFinalPrice.push(cartPrices)
@@ -104,7 +104,7 @@ if(products === null || products == 0 ){
         `;
 };
 
-
+/*
 //--Formulaire
 //Sélection du bouton envoyer le formulaire
 const btnSendForm = document.querySelector("#btnForm");
@@ -115,47 +115,78 @@ e.preventDefault();
 const contact = {
     firstName : document.querySelector("#prenom").value,
     lastName : document.querySelector("#nom").value,
-    address : document.querySelector("#adresse").value,
-    city : document.querySelector("#ville").value,
     mail : document.querySelector("#email").value,
+    address : document.querySelector("#adresse").value,
+    city : document.querySelector("#ville").value,  
 }
-
+*/
 //--Gestion validation du formulaire
 
 
-localStorage.setItem("contact", JSON.stringify(contact));
+/*localStorage.setItem("contact", JSON.stringify(contact));
 //Mettre les values du formulaire et mettre les produits sélectionnés dans un objet à envoyer vers le serveur
 const sendToServer = {
-    products,
-    contact
+    contact,
+    products
 }
 console.log("sendToServer");
 console.log(sendToServer);
+*/
 
-//Envoie de l'objet sendToServer vers le serveur
-const promise01 = fetch("http://localhost:3000/api/cameras/order", {
-    method: "POST",
-    body: JSON.stringify(sendToServer),
-    headers: {
-        "Content-type" : "application/json",
-    },
+//POST pour l'envoie du contact et du tableau d'achats
+const sendOrderRequest = async function (sendToServer) {
+    console.log(sendToServer);
+    try {
+        let response = await fetch('http://localhost:3000/api/cameras/order', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(sendToServer)
+        });
+        if (response.ok) {
+            let responseData = await response.json();
+            windows.location = 'confirmation.html'
+        } else {
+            console.log("Une erreur s'est produite et la requête n'a pas abouti");
+            console.log(response.status);
+        }
+    } catch (error){
+        console.log(error);
+    }
+}
 
+//Sélection et écoute du bouton pour envoyer le formulaire
+document.getElementById('btnForm').addEventListener('click', function (e) {
+    e.preventDefault();
+    let formOrder = {
+        contact : { 
+            firstName : document.getElementById('prenom').value,
+            lastName : document.getElementById('nom').value,
+            address : document.getElementById('adresse').value,
+            city : document.getElementById('ville').value,
+            mail : document.getElementById('email').value},
+        products : []
+        };
+    for (let h = 0; h < productsCart.length; h++) {
+        formOrder.products.push(productsCart[h].id);
+    }
+sendOrderRequest (formOrder);
 });
 
-console.log("prommise01");
-console.log(promise01);
-});
+    
 
-   
-            //--Maintenir le contenu du localStorage dans les champs du formulaire
-            //Prendre la key dans le local storage et la mettre dans une variable
-            let dataLocalStorage = localStorage.getItem("contact");
-            //Convertir la chaîne de caractère en objet javascript
-            let dataLocalStorageObjet = JSON.parse(dataLocalStorage);
-            //Mettre les values du localStorage dans le formulaire
-            console.log(dataLocalStorageObjet);
-            document.querySelector("#nom").value =  dataLocalStorageObjet.lastName;
-            document.querySelector("#prenom").value =  dataLocalStorageObjet.firstName;
-            document.querySelector("#adresse").value =  dataLocalStorageObjet.address;
-            document.querySelector("#ville").value =  dataLocalStorageObjet.city;
-            document.querySelector("#email").value =  dataLocalStorageObjet.mail;
+
+
+
+//--Maintenir le contenu du localStorage dans les champs du formulaire
+//Prendre la key dans le local storage et la mettre dans une variable
+let dataLocalStorage = localStorage.getItem("contact");
+//Convertir la chaîne de caractère en objet javascript
+let dataLocalStorageObjet = JSON.parse(dataLocalStorage);
+//Mettre les values du localStorage dans le formulaire
+document.querySelector("#nom").value =  dataLocalStorageObjet.lastName;
+document.querySelector("#prenom").value =  dataLocalStorageObjet.firstName;
+document.querySelector("#adresse").value =  dataLocalStorageObjet.address;
+document.querySelector("#ville").value =  dataLocalStorageObjet.city;
+document.querySelector("#email").value =  dataLocalStorageObjet.mail;

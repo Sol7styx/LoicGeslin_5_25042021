@@ -103,19 +103,19 @@ OK pour aller au panier ANNULER pour revenir à l'accueil`)){
         }
         //fonction pour ajouter un produit dans le localStorage
         const addProductInLocalStorage = () => {
-            products.push(detailsCam); //Ajout dans le tableau de l'objet avec les values choisies
+            productsCart.push(detailsCam); //Ajout dans le tableau de l'objet avec les values choisies
             //Transformation en JSON, puis envoie dnas la key "productList" du local Storage
-            localStorage.setItem("productList", JSON.stringify(products)); 
+            localStorage.setItem("productList", JSON.stringify(productsCart)); 
         };
         //Vérifions si le local storage contient des données (prductsInLocalStorage)
-        let products = JSON.parse(localStorage.getItem("productList"));
+        let productsCart = JSON.parse(localStorage.getItem("productList"));
         //JSON.parse pour convertir les données au format JSON qui sont dans le local storage en objet JavaScript
-        if(products){ //Si pas de produit dans le loca storage
+        if(productsCart){ //Si pas de produit dans le loca storage
             addProductInLocalStorage();
             popupConfirmation();
         }
         else{
-            products = [];
+            productsCart = [];
             addProductInLocalStorage();
             popupConfirmation();
         }
