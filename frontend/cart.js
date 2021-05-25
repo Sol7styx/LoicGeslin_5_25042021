@@ -65,7 +65,7 @@ if(productsCart === null || productsCart == 0 ){
         })
     }
 
-    //--Vider entièrement le panier --
+    //--Vider entièrement le panier --git 
     //Insertion du bouton dans le HTML du panier
     btnEmptyCart.innerHTML = `
         <div>
@@ -119,7 +119,8 @@ const sendOrderRequest = async function (sendToServer) {
         });
         if (response.ok) {
             let responseData = await response.json();
-            windows.location = 'confirmation.html'
+            console.log(responseData.orderId);
+            windows.location = 'confirmation.html';
         } else {
             console.log("Une erreur s'est produite et la requête n'a pas abouti");
             console.log(response.status);
@@ -144,6 +145,7 @@ document.getElementById('btnForm').addEventListener('click', function (e) {
     for (let h = 0; h < productsCart.length; h++) {
         formOrder.products.push(productsCart[h].id);
     }
+    console.log(formOrder);
 sendOrderRequest (formOrder);
 });
 
