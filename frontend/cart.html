@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bienvenue chez Orinico, site de vente de caméras vintage">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -21,24 +21,7 @@
     </header>
     <div class="globalcart" id="globalcart">
         <h2>Votre Panier</h2>
-        <div class="cartcontainer" id="cartcontainer">
-            <!--<div class="card" id="card">
-                <div class="cardimage">
-                    <img alt="" class="" src="">
-                </div>
-                <div>
-                    <a href=""><h2></h2></a>
-                    <p class="text">Quantité :</p>
-                    <p class="text">Objectifs : </p>
-                </div>
-                <div class="price">
-                    <p>Prix : <span>€</span></p>
-                </div>
-                <div>
-                    <button class="btnremove" onclick="">Supprimer</button>
-                </div>
-            </div> -->
-        </div>
+        <div class="cartcontainer" id="cartcontainer"></div>
         
         <div class="totalPriceCart" id="totalPriceCart"></div>
         
@@ -50,12 +33,12 @@
                 <div class="form">
                     <label for="nom">Nom :</label>
                     <input type="text" name="nom" placeholder="Votre Nom" minlength="3" id="lastName" aria-label="nom"
-                        class="inp" required pattern="[A-Za-z]+">
+                        class="inp" required>
                 </div>
                 <div class="form">
                     <label for="prenom">Prénom :</label>
                     <input type="text" name="prenom" placeholder="Votre Prénom" minlength="2" id="firstName"
-                        aria-label="prénom" class="inp" required pattern="[A-Za-z]+">
+                        aria-label="prénom" class="inp" required>
                 </div>
 
                 <div class="form">
@@ -66,12 +49,12 @@
                 <div class="form ">
                     <label for="ville">Ville :</label>
                     <input type="text" name="ville" placeholder="Votre Ville" minlength="2" id="city" aria-label="ville"
-                        class="inp" required pattern="[A-Za-z]+">
+                        class="inp" required">
                 </div>
                 <div class="form ">
                     <label for="email">Email :</label>
                     <input type="email" name="email" placeholder="Votre Email" id="mail" aria-label="email" class="inp"
-                        required pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}">
+                        required>
                 </div>
                 <div class="form">
                     <button id="btnForm" name="envoyer" type="submit" class="btn-success"
@@ -99,7 +82,7 @@
             </li>
         </ul>
     </footer>
-    <script src="camera.js"></script>
+    
     <script src="finalCart.js"></script>
 
 </body>
