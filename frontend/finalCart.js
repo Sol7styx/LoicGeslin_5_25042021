@@ -1,4 +1,3 @@
-//déclaration variable productInLocalStorage dans laquelle on met les key et les values qui sont dans le local storage
 let productsCart = JSON.parse(localStorage.getItem("productList"));
 
 
@@ -43,7 +42,6 @@ if(productsCart === null || productsCart == 0 ){
     //--Bouton suppression article
     let btnremove = document.querySelectorAll(".btnremove");
     //console.log(btnremove);
-
     for (let a = 0; a < btnremove.length; a++){
         btnremove[a].addEventListener("click" , (event) =>{
             event.preventDefault(); //pour éviter que le click sur le bouton supprimer ne recharge la page
@@ -65,7 +63,7 @@ if(productsCart === null || productsCart == 0 ){
         })
     }
 
-    //--Vider entièrement le panier --git 
+    //--Vider entièrement le panier
     //Insertion du bouton dans le HTML du panier
     btnEmptyCart.innerHTML = `
         <div>
@@ -104,64 +102,112 @@ if(productsCart === null || productsCart == 0 ){
         `;
 };
 
+// formulaire de contact
 
+// déclaration des regex
+let regexText = /^[A-Za-zçàêéèîïÀÊÉÈÎÏ\s-]{2,}$/;
+let regexAddress = /^[A-Za-zçàêéèîïÀÊÉÈÎÏ0-9\s-]{2,}$/;
+let regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9]+)*$/;
 
-//POST pour l'envoie du contact et du tableau d'achats
-const sendOrderRequest = async function (sendToServer) {
-    console.log(sendToServer);
-    try {
-        let response = await fetch('http://localhost:3000/api/cameras/order', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(sendToServer)
-        });
-        if (response.ok) {
-            let responseData = await response.json();
-            console.log(responseData.orderId);
-            windows.location = 'confirmation.html';
-        } else {
-            console.log("Une erreur s'est produite et la requête n'a pas abouti");
-            console.log(response.status);
-        }
-    } catch (error){
-        console.log(error);
+// récupération des champs du formulaire
+let firstName = document.getElementById("firstname");
+let lastName = document.getElementById("lastname");
+let address = document.getElementById("address");
+let city = document.getElementById("city");
+let mail = document.getElementById("mail");
+
+// fonction de validation du formulaire
+function validateForm()
+{
+    // si un champ requis est manquant
+    if(firstName.validity.valueMissing || lastName.validity.valueMissing || address.validity.valueMissing || city.validity.valueMissing || mail.validity.valueMissing)
+    {
+        let alert = document.getElementById("alert");
+        alert.innerHTML = "Veuillez remplir tous les champs.";
+        alert.style.color = "#FF0000";
+        console.log("Missing value here");
+        return false;
     }
+    // si un champ est mal rempli
+    else if(regexText.test(firstName.value) == false || regexText.test(lastName.value) == false || regexAddress.test(address.value) == false || regexText.test(city.value) == false || regexMail.test(mail.value) == false)
+    {
+        let alert = document.getElementById("alert");
+        alert.innerHTML = "Veuillez remplir les champs correctement.";
+        alert.style.color = "#FF0000";
+        console.log("Wrong value here");
+        return false;
+    }
+    else
+    {
+        let alert = document.getElementById("alert");
+        alert.innerHTML = "Merci !";
+        return true;
+    }
+};
+
+// fonction de création de l'objet contact pour POST
+function createContact()
+{
+    let contact = {
+    firstName : firstName.value, 
+    lastName : lastName.value, 
+    address : address.value, 
+    city : city.value, 
+    email : mail.value
+    };
+    return contact;
 }
 
-//Sélection et écoute du bouton pour envoyer le formulaire
-document.getElementById('btnForm').addEventListener('click', function (e) {
+// création du tableau de produits pour POST
+let products = [];
+products.push(productsCart);
+console.log(products);
+// fonction POST products et contact à l'API
+function sendAndReceiveData(contact, products)
+{
+    let fetchPostPromise = fetch("http://localhost:3000/api/cameras/order",
+    {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({contact, products})
+    });
+    fetchPostPromise.then(response =>
+        {
+            return response.json(); 
+        }).then(backData => 
+            {
+            console.log("Numéro de commande :" + backData.orderId);
+            localStorage.setItem("orderId", backData.orderId);
+            });
+    fetchPostPromise.catch(error => {
+        console.log("Erreur lors de POST : " + error);
+    });
+};
+
+// au clic sur le bouton d'envoi...
+
+let sendInput = document.getElementById("btnForm");
+sendInput.addEventListener('click', function(e)
+{
+    // ... validation du formulaire
+    validateForm(); 
     e.preventDefault();
-    let formOrder = {
-        contact : { 
-            firstName : document.getElementById('prenom').value,
-            lastName : document.getElementById('nom').value,
-            address : document.getElementById('adresse').value,
-            city : document.getElementById('ville').value,
-            mail : document.getElementById('email').value},
-        products : []
-        };
-    for (let h = 0; h < productsCart.length; h++) {
-        formOrder.products.push(productsCart[h].id);
+    // ... création d'un objet contact 
+    if(validateForm()==true)
+    {
+    console.log("Formulaire validé");
+    contact = createContact();
+    console.log("Contact créé");
+    // ... POST à l'API
+    sendAndReceiveData(contact, products);
+    // ... redirection page de commande
+    setTimeout (function()
+    {
+        window.location.href = "confirmation.html"
+    }, 500)
     }
-    console.log(formOrder);
-sendOrderRequest (formOrder);
+    else
+    {
+        console.log("Formulaire non-validé");
+    }
 });
-
-    
-
-
-
-
-//--Maintenir le contenu du localStorage dans les champs du formulaire
-//Prendre la key dans le local storage et la mettre dans une variable
-let dataLocalStorage = localStorage.getItem("contact");
-//Convertir la chaîne de caractère en objet javascript
-let dataLocalStorageObjet = JSON.parse(dataLocalStorage);
-//Mettre les values du localStorage dans le formulaire
-document.querySelector("#nom").value =  dataLocalStorageObjet.lastName;
-document.querySelector("#prenom").value =  dataLocalStorageObjet.firstName;
-document.querySelector("#adresse").value =  dataLocalStorageObjet.address;
-document.querySelector("#ville").value =  dataLocalStorageObjet.city;
-document.querySelector("#email").value =  dataLocalStorageObjet.mail;
