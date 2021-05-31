@@ -72,7 +72,7 @@ header a {
 .detailsbutton {
     padding: 10px;
     margin-bottom: 10px;
-    border-radius: 30px;
+    border-radius: 15px;
     background:#F3E9F1;
     box-shadow: 0 0.5rem 0.5rem $mediumgray;
     transition: ease-in-out 0.5s;
@@ -100,6 +100,7 @@ header a {
 footer {
     display: flex;
     background-color:#262626 ;
+    margin-top: 50px;
 }
 footer ul {
     width: 100%;
@@ -127,15 +128,38 @@ footer ul {
 }
 
 /* Page panier */
-.card {
+.card-cart {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    border: black 1px solid;
+    border-radius: 20px;
+    background-color: #F5F5F5;
+    box-shadow: 0px 0px 10px #f2f2f2, 0px 0px 10px #a9a9a9;  
+    margin-bottom: 20px;
+}
+.cartcontainer{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
 .imageCard {
     width: 10em;
+    border-radius: 20px;
+    margin: 2px 0 0 8px;
 }
-
+.cardtext{
+    margin: 0 50px 0 20px;
+}
+.buttonx {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.cart-total{
+    margin-top: 40px;
+    font-size: 1.3em;
+}
 /*Formulaire de contact*/
 legend {
     font-size: large;
@@ -148,11 +172,11 @@ fieldset {
     margin: 10px 0;
     border-radius: 10px;
 }
-fiedset>.form {
-    width: 100%;
+form {
+    width: 50%;
     padding: 5px;
 }
-.form>label {
+label {
     width: 20%;
     display: inline-block;
     text-align: right;
@@ -168,4 +192,12 @@ label+input {
     border: 1px solid #F3E9F1;
     border-radius: 5px;
     box-shadow: 1px 1px 2px #c2bac0 inset;
+}
+
+/*Page confirmation de commande*/
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
 }

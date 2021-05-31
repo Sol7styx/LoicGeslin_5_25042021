@@ -14,20 +14,21 @@
 <body>
     <header>
         <div class="headerlogo">
-            <a href=""><img src="img/logoOrinoco1.png" alt="logo Orinoco" class="logo"></a>
+            <a href="index.html"><img src="img/logoOrinoco1.png" alt="logo Orinoco" class="logo"></a>
             <h1>OriCam</h1>
         </div>
-        <div class="headerpanier">
-            <a href="cart.html">Panier</a><span><i class="fas fa-shopping-cart"></i></span>
-        </div>
+        
     </header>
 
-    <main class="orderconfirmation">
-        <div class="orderSummary">
-            <p class="finaltext">Merci de votre confiance !</p>
-            <p class="finaltext">Votre commande N° <span id="orderNumber"></span> d'un montant de : <span id="orderPrice"></span></p>
-            <p class="finaltext">a bien été prise en compte et vous sera expédiée dans les meilleurs délais</p>
-            <p class="finaltext">Pour toute question concernant votre commande, veuillez nous contacter par mail</p>
+    
+    <main id="content" class="card">
+        <div class="commande">
+            <p class="text comm">Merci <span id="nomCom"></span> de nous avoir fait confiance !</p>
+            <p class="text comm">Votre commande a bien été prise en compte et vous sera expédiée dans les meilleurs délais</p>
+            <p class="text comm">N° de commande : <span id="order"></span></p>
+            <p class="text comm">Prix total :<span id="totalOrder"></span></p>
+            <p class="text comm">Pour toute question concernant votre commande, veuillez nous contacter par mail</p>
+        </div>
     </main>
 
     <footer>
@@ -46,7 +47,7 @@
             </li>
         </ul>
     </footer>
-    <script src="finalCart.js"></script>
+    <script src="confirmation.js"></script>
     
 
 </body>

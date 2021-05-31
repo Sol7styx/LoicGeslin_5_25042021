@@ -19,51 +19,73 @@
         </div>
         
     </header>
-    <div class="globalcart" id="globalcart">
-        <h2>Votre Panier</h2>
-        <div class="cartcontainer" id="cartcontainer"></div>
-        
-        <div class="totalPriceCart" id="totalPriceCart"></div>
-        
-        <div class="emptyallcart" id="emptyallcart"></div>
+    
+    <main class="cartcontainer">
 
-        <form class="form-container" id="form-container" method="POST">
-            <fieldset id="sec-contact">
-                <legend>Veuillez saisir vos coordonnées</legend>
-                <div class="form">
-                    <label for="nom">Nom :</label>
-                    <input type="text" name="nom" placeholder="Votre Nom" minlength="3" id="lastName" aria-label="nom"
-                        class="inp" required>
-                </div>
-                <div class="form">
-                    <label for="prenom">Prénom :</label>
-                    <input type="text" name="prenom" placeholder="Votre Prénom" minlength="2" id="firstName"
-                        aria-label="prénom" class="inp" required>
-                </div>
+        <section id="content-section">
+            <h2 class="section-header">Panier</h2>
 
-                <div class="form">
-                    <label for="adresse">Adresse :</label>
-                    <input type="text" name="adresse" placeholder="Votre Adresse" minlength="5" id="address"
-                        aria-label="adresse" class="inp" required>
+            <!-- Ligne de chaque article dans le panier -->
+            <div id="products" class="cart-items"></div>
+
+            <!-- Prix total du panier  -->
+            <div id="cart-total" class="cart-total">
+                <strong id="cart-total-title">Total :</strong>
+                <span id="cart-total-price">0,00 €</span>
+            </div>
+        </section>
+
+        <!-- Formulaire de validation client -->
+        <form id="formulaire-validation" name="commande" action="commande.html" method="POST">
+            <h2> Formulaire de commande</h2>
+            <fieldset>
+                <legend>Formulaire de commande</legend>
+                <div class="form-group">
+                    <label for="firstName">Prénom :</label>
+                    <input type="text" name="firstName" placeholder="Thomas"
+                        pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ \s]{1,}"
+                        title="Contient uniquement des lettres">
                 </div>
-                <div class="form ">
-                    <label for="ville">Ville :</label>
-                    <input type="text" name="ville" placeholder="Votre Ville" minlength="2" id="city" aria-label="ville"
-                        class="inp" required">
+                <div class="form-group">
+                    <label for="lastName">Nom :</label>
+                    <input type="text" name="lastName" placeholder="Pesquet"
+                    pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ \s]{1,}"
+                    title="Contient uniquement des lettres">
                 </div>
-                <div class="form ">
-                    <label for="email">Email :</label>
-                    <input type="email" name="email" placeholder="Votre Email" id="mail" aria-label="email" class="inp"
-                        required>
+                <div class="form-group">
+                    <label for="address">Adresse :</label>
+                    <input type="text" name="address" placeholder="Station Orbitale"
+                    pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ 0-9\s]{5,}"
+                    title="contient chiffres et lettres">
                 </div>
-                <div class="form">
-                    <button id="btnForm" name="envoyer" type="submit" class="btn-success"
-                        aria-label="commander">Commander</button>
+                <div class="form-group">
+                    <label for="zip">Code Postal :</label>
+                    <input type="text" name="zip" placeholder="00000" pattern="[0-9]{5}"
+                        title="Contient uniquement chiffres">
                 </div>
+                <div class="form-group">
+                    <label for="City">Ville :</label>
+                    <input type="text" name="city" placeholder="Espace"
+                        pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s]{2,}"
+                        title="Contient uniquement des lettres">
+                </div>
+                <div class="form-group">
+                    <label for="email">Mail :</label>
+                    <input type="text" name="email" placeholder="thomas.pesquet@mail.com"
+                        pattern="[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$"
+                        title="Rentrer une adresse mail valide exemple: email@example.com">
+                </div>
+                <div id="error-message"></div>
             </fieldset>
             
+            <div class="form-group">
+                <input type="submit" id="btn-validation" class="btn btn-success btn-purchase" name="valider"
+                    value="Valider">
+            </div>
+
         </form>
-    </div>
+
+    </main>
         
 
     <footer>
@@ -82,7 +104,7 @@
             </li>
         </ul>
     </footer>
-    
+    <script src="camera.js"></script>
     <script src="finalCart.js"></script>
 
 </body>

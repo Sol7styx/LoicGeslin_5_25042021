@@ -1,213 +1,194 @@
-let productsCart = JSON.parse(localStorage.getItem("productList"));
+let products = document.getElementById('products');
+let totalCart = document.getElementById('cart-total-price');
+let quantityInput = document.getElementsByClassName('cart-quantity-input');
+let total = 0;
+let panier = JSON.parse(localStorage.getItem('productList'));
+console.log(panier);
 
-
-
-//---AFFICHAGE DES PRODUITS DU PANIER---
-//Sélection de la classe où on injecte le code HTML
-const addHtml = document.getElementById("cartcontainer");
-const totalPriceHtml = document.getElementById("totalCart");
-const btnEmptyCart = document.getElementById("emptyallcart");
-const finalPrice = document.getElementById("totalPriceCart");
-
-if(productsCart === null || productsCart == 0 ){
+if(panier === null || panier == 0 ){
     //Html panier vide
-    addHtml.innerHTML = `
+    products.innerHTML = `
         <div class="emptycard">
         <iframe src="https://giphy.com/embed/26hkhPJ5hmdD87HYA" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/kitchen-looney-tunes-empty-26hkhPJ5hmdD87HYA"></a></p>
         <p class="textempty">Votre panier est vide</p>
         </div>`;
 } else {
-    //on crée une boucle pour parcourir les éléments du tableau et générer le HTML
-    productsCart.forEach((objet) => {
-        addHtml.innerHTML += `
-            <div class="card" id="card">
-                <div class="cardimage">
-                    <img alt="${objet.name}" class="imageCard" src="${objet.image}">
-                </div>
-                <div>
-                    <a href="product.html?id=${objet._id}"><h2>${objet.name}</h2></a>
-                    <p class="text">Quantité : ${objet.quantity}</p>
-                    <p class="text">Objectifs : ${objet.lens}</p>
-                </div>
-                <div class="price">
-                    <p>Prix : ${objet.totalPrice}<span>€</span></p>
-                </div>
-                <div>
-                    <button class="btnremove" id="btnremove">Supprimer</button>
-                </div>
-            </div>
-            `;
-    });
-
-    //--Bouton suppression article
-    let btnremove = document.querySelectorAll(".btnremove");
-    //console.log(btnremove);
-    for (let a = 0; a < btnremove.length; a++){
-        btnremove[a].addEventListener("click" , (event) =>{
-            event.preventDefault(); //pour éviter que le click sur le bouton supprimer ne recharge la page
-
-            let removeId = productsCart[a].idCamera && productsCart[a].lens;
-            console.log("removeId");
-            console.log(removeId);
-            //méthode filter
-            productsCart = productsCart.filter( el => (el.idCamera && el.lens)  !== removeId);
-            console.log(productsCart);
-
-            //on envoie la variable dans le local Storage 
-            //transformation en format JSON et envoie dans la key "productList" du localStorage
-            localStorage.setItem("productList", JSON.stringify(productsCart));
-
-            //avertir que le produit a été supprimé et rechargement de la page
-            alert("Confirmation de la suppression de cet article");
-            window.location.href = "cart.html";
-        })
-    }
-
-    //--Vider entièrement le panier
-    //Insertion du bouton dans le HTML du panier
-    btnEmptyCart.innerHTML = `
-        <div>
-            <button class="btnClearCart" id="btnClearCart">Vider le Panier</button>
+    panier.forEach(element => {
+    console.log(element);
+    products.innerHTML += `
+    <div class="card-cart">
+        <div class="cardimage">
+            <img alt="${element.name}" class="imageCard" src="${element.image}">
         </div>
-    `;
-    //Suppression de la key "produit" du local storage pour vider entièrement le panier
-    btnEmptyCart.addEventListener('click', (e)=>{
-        e.preventDefault;
-
-    //utilisation de .removeItem pour vider le Local Storage
-    localStorage.removeItem("productList");
-    //on recharge la page
-    window.location.href = "cart.html";
-    });
-
-    //--Montant total du panier
-    //Déclaration de la variable pour pouvoir y mettre les prix qui sont présents dans le panier
-    let calculFinalPrice = [];
-    //--Récupérer les prix dans le panier--
-    for (let x = 0; x < productsCart.length; x++){
-        let cartPrices = productsCart[x].totalPrice;
-
-    //--mettre les prix dans le tableau contenu par la variable calculFinalPrice
-        calculFinalPrice.push(cartPrices)
-    }
-    //Additionner les prix qui sont dans le tableau de la variable calculFinalPrice avec la méthode .reduce
-        const reducer = (accumulator, currentValue) => accumulator + currentValue;
-        const finalCartPrice = calculFinalPrice.reduce(reducer, 0);
-        
-        //Code HTML pour affichage prix total
-    finalPrice.innerHTML = `
-        <div class="totalCart" id="totalCart">
-            <h2>Total de votre panier : ${finalCartPrice}<span>€</span></h2>
+        <div class="cardtext">
+            <a href="product.html?id=${element._id}"><p>${element.name}</p></a>
+            <p class="text">Quantité : ${element.quantity}</p>
+            <p class="text">Objectifs : ${element.lens}</p>
         </div>
-        `;
+        <div class="price">
+            <p>Prix : ${element.totalPrice}<span>€</span></p>
+        </div>
+        <div class="buttonx">    
+            <button id="${element.id}" class="btn btn-danger btn-X" type="button">X</button>
+        </div>
+    </div>`;
+
+});
 };
+updateQuantity();
+totalCount();
 
-// formulaire de contact
 
-// déclaration des regex
-let regexText = /^[A-Za-zçàêéèîïÀÊÉÈÎÏ\s-]{2,}$/;
-let regexAddress = /^[A-Za-zçàêéèîïÀÊÉÈÎÏ0-9\s-]{2,}$/;
-let regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9]+)*$/;
+//Suppression article
+let btnremove = document.querySelectorAll(".btn-danger");
+for (let a = 0; a < btnremove.length; a++){
+    btnremove[a].addEventListener("click" , (event) =>{
+        event.preventDefault(); //pour éviter que le click sur le bouton supprimer ne recharge la page
 
-// récupération des champs du formulaire
-let firstName = document.getElementById("firstname");
-let lastName = document.getElementById("lastname");
-let address = document.getElementById("address");
-let city = document.getElementById("city");
-let mail = document.getElementById("mail");
+        let removeId = panier[a].idCamera && panier[a].lens;
+        console.log("removeId");
+        console.log(removeId);
+        //méthode filter
+        panier = panier.filter( el => (el.idCamera && el.lens)  !== removeId);
+        console.log(panier);
+        //on envoie la variable dans le local Storage 
+        //transformation en format JSON et envoie dans la key "productList" du localStorage
+        localStorage.setItem("productList", JSON.stringify(panier));
 
-// fonction de validation du formulaire
-function validateForm()
-{
-    // si un champ requis est manquant
-    if(firstName.validity.valueMissing || lastName.validity.valueMissing || address.validity.valueMissing || city.validity.valueMissing || mail.validity.valueMissing)
-    {
-        let alert = document.getElementById("alert");
-        alert.innerHTML = "Veuillez remplir tous les champs.";
-        alert.style.color = "#FF0000";
-        console.log("Missing value here");
-        return false;
-    }
-    // si un champ est mal rempli
-    else if(regexText.test(firstName.value) == false || regexText.test(lastName.value) == false || regexAddress.test(address.value) == false || regexText.test(city.value) == false || regexMail.test(mail.value) == false)
-    {
-        let alert = document.getElementById("alert");
-        alert.innerHTML = "Veuillez remplir les champs correctement.";
-        alert.style.color = "#FF0000";
-        console.log("Wrong value here");
-        return false;
-    }
-    else
-    {
-        let alert = document.getElementById("alert");
-        alert.innerHTML = "Merci !";
-        return true;
-    }
-};
+        //avertir que le produit a été supprimé et rechargement de la page
+        alert("Confirmation de la suppression de cet article");
+        window.location.href = "cart.html";
+        totalCount();
+    })
+}
+// function de mise à jour de la quantité
+function updateQuantity() {
+    
+    let product = JSON.parse(localStorage.getItem('productList'));
 
-// fonction de création de l'objet contact pour POST
-function createContact()
-{
-    let contact = {
-    firstName : firstName.value, 
-    lastName : lastName.value, 
-    address : address.value, 
-    city : city.value, 
-    email : mail.value
-    };
-    return contact;
 }
 
-// création du tableau de produits pour POST
-let products = [];
-products.push(productsCart);
-console.log(products);
-// fonction POST products et contact à l'API
-function sendAndReceiveData(contact, products)
-{
-    let fetchPostPromise = fetch("http://localhost:3000/api/cameras/order",
-    {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({contact, products})
-    });
-    fetchPostPromise.then(response =>
-        {
-            return response.json(); 
-        }).then(backData => 
-            {
-            console.log("Numéro de commande :" + backData.orderId);
-            localStorage.setItem("orderId", backData.orderId);
-            });
-    fetchPostPromise.catch(error => {
-        console.log("Erreur lors de POST : " + error);
-    });
+
+// Prix total du panier;
+function totalCount() {
+    for (let i in panier) {
+        total += panier[i].price * panier[i].quantity;
+    }
+    console.log(total);
+
+    totalCart.textContent = total  + ' €';
+}
+
+
+
+const url = 'http://localhost:3000/api/cameras/order';
+
+
+// Fonction du formulaire et informations récupérées
+function form() {
+
+    if (panier == null || panier.length == 0) {
+
+        let disableBtn = document.querySelector('#btn-validation');
+        disableBtn.setAttribute('disabled', "");
+
+    } else {
+
+        let disableBtn = document.querySelector('#btn-validation');
+        disableBtn.removeAttribute('disabled', "");
+
+
+        document.forms["commande"].addEventListener("submit", function (e) {
+            e.preventDefault();
+
+
+            let products = [];
+
+            for (i = 0; i < panier.length; i++) {
+                let productId = panier[i].idCamera;
+                products.push(productId);
+            }
+
+            // RegExp pour la validation via JS.
+            let valueForm = new FormData(document.getElementById('formulaire-validation'));
+            let nameFormat = new RegExp(/^[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ \s]{1,}/);
+            let addressFormat = new RegExp(/[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ 0-9\s]{5,}/);
+            let zipFormat = new RegExp(/[0-9]{5}/);
+            let cityFormat = new RegExp(/[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s]{2,}/);
+            let emailFormat = new RegExp(/[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/);
+            var error_message = document.getElementById("error-message");
+            var text;
+
+            if (nameFormat.test(valueForm.get("firstName")) && nameFormat.test(valueForm.get('lastName')) && addressFormat.test(valueForm.get('address')) && zipFormat.test(valueForm.get('zip')) && cityFormat.test(valueForm.get('city')) && emailFormat.test(valueForm.get('email'))) {
+
+                // si le formulaire est bien renseigné pas de message d'erreur
+                text = "";
+                error_message.innerHTML = text;
+
+                let contact = {
+                    firstName: valueForm.get('firstName'),
+                    lastName: valueForm.get('lastName'),
+                    address: valueForm.get('address'),
+                    zip: valueForm.get('zip'),
+                    city: valueForm.get('city'),
+                    email: valueForm.get('email'),
+                };
+                console.log(contact); // récupération des informations du formulaire sous forme d'objet
+                console.log(products); // récupération des Id des différents produits sous forme de tableau
+
+                const cart = { contact, products };
+
+                sendData(url, cart);
+                console.log(url, cart);
+
+                // Si un champ du formulaire est mal renseigné, renvoi d'un message d'erreur
+            } else if (nameFormat.test(valueForm.get("firstName")) == false) {
+                text = "Merci d'entrer un prénom valide";
+                error_message.innerHTML = text;
+            } else if (nameFormat.test(valueForm.get("lastName")) == false) {
+                text = "Merci d'entrer un nom valide";
+                error_message.innerHTML = text;
+            } else if (addressFormat.test(valueForm.get('address')) == false) {
+                text = "Merci d'entrer une adresse valide";
+                error_message.innerHTML = text;
+            } else if (zipFormat.test(valueForm.get('zip')) == false) {
+                text = "Merci d'entrer un code postal valide";
+                error_message.innerHTML = text;
+            } else if (cityFormat.test(valueForm.get('city')) == false) {
+                text = "Merci d'entrer un nom de ville valide";
+                error_message.innerHTML = text;
+            } else if (emailFormat.test(valueForm.get('email')) == false) {
+                text = "Merci d'entrer une adresse valide";
+                error_message.innerHTML = text;
+            }
+        });
+    };
+
 };
 
-// au clic sur le bouton d'envoi...
 
-let sendInput = document.getElementById("btnForm");
-sendInput.addEventListener('click', function(e)
-{
-    // ... validation du formulaire
-    validateForm(); 
-    e.preventDefault();
-    // ... création d'un objet contact 
-    if(validateForm()==true)
-    {
-    console.log("Formulaire validé");
-    contact = createContact();
-    console.log("Contact créé");
-    // ... POST à l'API
-    sendAndReceiveData(contact, products);
-    // ... redirection page de commande
-    setTimeout (function()
-    {
-        window.location.href = "confirmation.html"
-    }, 500)
-    }
-    else
-    {
-        console.log("Formulaire non-validé");
-    }
-});
+form();
+
+
+// Fonction envoie de données au serveur 
+function sendData(url, order) {
+
+    fetch(url, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify(order)
+
+    }).then(function (response) {
+        return response.json();
+
+    }).then(function (data) {
+        localStorage.setItem('commande', JSON.stringify(data));
+        document.location = 'confirmation.html';
+        alert('Votre commande à bien été validée !')
+
+    }).catch(function (error) {
+        console.log("Erreur", error);
+    })
+};
