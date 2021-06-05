@@ -2,6 +2,7 @@ let products = document.getElementById('products');
 let totalCart = document.getElementById('cart-total-price');
 let quantityInput = document.getElementsByClassName('cart-quantity-input');
 let total = 0;
+// -- récupération des articles dans le localStorage et tout mettre dans panier
 let panier = JSON.parse(localStorage.getItem('productList'));
 console.log(panier);
 
@@ -35,39 +36,36 @@ if(panier === null || panier == 0 ){
 
 });
 };
-updateQuantity();
+deletearticle();
 totalCount();
 
-
 //Suppression article
-let btnremove = document.querySelectorAll(".btn-danger");
-for (let a = 0; a < btnremove.length; a++){
-    btnremove[a].addEventListener("click" , (event) =>{
-        event.preventDefault(); //pour éviter que le click sur le bouton supprimer ne recharge la page
+function deletearticle() {
+    let btnremove = document.querySelectorAll(".btn-danger");
+    for (let a = 0; a < btnremove.length; a++){
+        btnremove[a].addEventListener("click" , (event) =>{
+            event.preventDefault(); //pour éviter que le click sur le bouton supprimer ne recharge la page        
+            let removeId = {"id":panier[a].idCamera, "lens":panier[a].lens};
+            console.log("removeId");
+            console.log(removeId);
+            if (panier[a].id == removeId.id && panier[a].lens == removeId.lens) {
+                return panier[a];
+            }
+            console.log(panier[a]);
+            //supprimer du tableau l'élément d'index a et lui seul
+            panier.splice(a, 1);
+            console.log(panier);
+            //on envoie la variable dans le local Storage 
+            //transformation en format JSON et envoie dans la key "productList" du localStorage
+            localStorage.setItem("productList", JSON.stringify(panier));
 
-        let removeId = panier[a].idCamera && panier[a].lens;
-        console.log("removeId");
-        console.log(removeId);
-        //méthode filter
-        panier = panier.filter( el => (el.idCamera && el.lens)  !== removeId);
-        console.log(panier);
-        //on envoie la variable dans le local Storage 
-        //transformation en format JSON et envoie dans la key "productList" du localStorage
-        localStorage.setItem("productList", JSON.stringify(panier));
-
-        //avertir que le produit a été supprimé et rechargement de la page
-        alert("Confirmation de la suppression de cet article");
-        window.location.href = "cart.html";
-        totalCount();
-    })
+            //avertir que le produit a été supprimé et rechargement de la page
+            alert("Confirmation de la suppression de cet article");
+            window.location.href = "cart.html";
+            totalCount();
+        })
+    }   
 }
-// function de mise à jour de la quantité
-function updateQuantity() {
-    
-    let product = JSON.parse(localStorage.getItem('productList'));
-
-}
-
 
 // Prix total du panier;
 function totalCount() {
@@ -75,35 +73,23 @@ function totalCount() {
         total += panier[i].price * panier[i].quantity;
     }
     console.log(total);
-
     totalCart.textContent = total  + ' €';
 }
-
-
 
 const url = 'http://localhost:3000/api/cameras/order';
 
 
 // Fonction du formulaire et informations récupérées
 function form() {
-
     if (panier == null || panier.length == 0) {
-
         let disableBtn = document.querySelector('#btn-validation');
         disableBtn.setAttribute('disabled', "");
-
     } else {
-
         let disableBtn = document.querySelector('#btn-validation');
         disableBtn.removeAttribute('disabled', "");
-
-
         document.forms["commande"].addEventListener("submit", function (e) {
             e.preventDefault();
-
-
             let products = [];
-
             for (i = 0; i < panier.length; i++) {
                 let productId = panier[i].idCamera;
                 products.push(productId);
@@ -163,16 +149,13 @@ function form() {
             }
         });
     };
-
 };
-
 
 form();
 
 
 // Fonction envoie de données au serveur 
 function sendData(url, order) {
-
     fetch(url, {
         method: "POST",
         headers: {
