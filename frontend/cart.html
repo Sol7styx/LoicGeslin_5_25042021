@@ -30,8 +30,8 @@
 
             <!-- Prix total du panier  -->
             <div id="cart-total" class="cart-total">
-                <strong id="cart-total-title">Total :</strong>
-                <span id="cart-total-price">0,00 €</span>
+                <strong id="cart-total-title">Total de votre panier : </strong>
+                <span id="cart-total-price"> 0,00 €</span>
             </div>
         </section>
 
@@ -41,36 +41,36 @@
             <fieldset>
                 <legend>Formulaire de commande</legend>
                 <div class="form-group">
-                    <label for="firstName">Prénom :</label>
+                    <label class="textlabel" for="firstName">Prénom :</label>
                     <input type="text" name="firstName" placeholder="Thomas"
                         pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ \s]{1,}"
                         title="Contient uniquement des lettres">
                 </div>
                 <div class="form-group">
-                    <label for="lastName">Nom :</label>
+                    <label class="textlabel" for="lastName">Nom :</label>
                     <input type="text" name="lastName" placeholder="Pesquet"
                     pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ \s]{1,}"
                     title="Contient uniquement des lettres">
                 </div>
                 <div class="form-group">
-                    <label for="address">Adresse :</label>
+                    <label class="textlabel" for="address">Adresse :</label>
                     <input type="text" name="address" placeholder="Station Orbitale"
                     pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ 0-9\s]{5,}"
                     title="contient chiffres et lettres">
                 </div>
                 <div class="form-group">
-                    <label for="zip">Code Postal :</label>
+                    <label class="textlabel" for="zip">Code Postal :</label>
                     <input type="text" name="zip" placeholder="00000" pattern="[0-9]{5}"
                         title="Contient uniquement chiffres">
                 </div>
                 <div class="form-group">
-                    <label for="City">Ville :</label>
+                    <label class="textlabel" for="City">Ville :</label>
                     <input type="text" name="city" placeholder="Espace"
                         pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s]{2,}"
                         title="Contient uniquement des lettres">
                 </div>
                 <div class="form-group">
-                    <label for="email">Mail :</label>
+                    <label class="textlabel" for="email">Mail :</label>
                     <input type="text" name="email" placeholder="thomas.pesquet@mail.com"
                         pattern="[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$"
                         title="Rentrer une adresse mail valide exemple: email@example.com">
@@ -78,7 +78,7 @@
                 <div id="error-message"></div>
             </fieldset>
             
-            <div class="form-group">
+            <div class="form-group-validation">
                 <input type="submit" id="btn-validation" class="btn btn-success btn-purchase" name="valider"
                     value="Valider">
             </div>

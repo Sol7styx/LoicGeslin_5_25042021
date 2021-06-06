@@ -35,16 +35,18 @@ function displayCamera(camera) {
     });
     document.getElementById("productcontainer").innerHTML += `
         <div class="cameraphoto">
-            <img class="cameraimage" src="${camera.imageUrl}" alt="photo de l'appareil"> 
+            <img class="cameraimagep" src="${camera.imageUrl}" alt="photo de l'appareil"> 
         </div>
         <div class="productsheet">
             <h2 class="productname">${camera.name}</h2>
             <h3 class="unitProductPrice">Prix unitaire : ${priceProduct} €</h3>
             <p class="productdescription">${camera.description}</p>
-            <form>
-                <label class="text" for="productAmount">Quantité</label>
-                <input id="productAmount" type="number" min="1" value="1"/>
-                <div>
+            <form class="formproduct">
+                <div class="formquantity">
+                    <label class="text" for="productAmount">Quantité</label>
+                    <input id="productAmount" type="number" min="1" value="1"/>
+                </div>
+                <div class="formlenses">
                     <label class="text" for="lensSelect">Objectifs</label>
                     <select class="lensSelect" id="lensSelect">
                         ${optionLens}

@@ -117,14 +117,71 @@ footer ul {
 /* Page Product*/
 .productcontainer {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
 }
 .cameraphoto {
-    width: 30em;
+    width: 50%;
+    
 }
 .cameraphoto >* {
     border-radius: 20px;
+    
+}
+.cameraimagep{
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    padding: 5px;
+    margin-top: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px #f2f2f2, 0px 0px 10px #a9a9a9; 
+}
+.productsheet {
+    padding: 5px;
+    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px #f2f2f2, 0px 0px 10px #a9a9a9;
+}
+.formproduct{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center ;
+    justify-content: space-evenly;
+}
+.formproduct .text{
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+.formquantity {
+    width: 100%;
+}
+.formlenses {
+    width: 100%;
+}
+.selectionprice {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+#productAmount{
+    margin-left: 30px;
+    width: 15%;
+    background-color: #fcfafc;
+    padding: 5px;
+    border: 1px solid #F3E9F1;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px #c2bac0 inset;
+}
+.lensSelect{
+    margin-left: 30px;
 }
 
 /* Page panier */
@@ -157,6 +214,8 @@ footer ul {
     margin-right: 20px;
 }
 .cart-total{
+    display: flex;
+    justify-content: center;
     margin-top: 40px;
     font-size: 1.3em;
 }
@@ -173,7 +232,7 @@ fieldset {
     border-radius: 10px;
 }
 form {
-    width: 50%;
+    width: 80%;
     padding: 5px;
 }
 label {
@@ -193,11 +252,17 @@ label+input {
     border-radius: 5px;
     box-shadow: 1px 1px 2px #c2bac0 inset;
 }
+.form-group-validation {
+    display: flex;
+    justify-content: center;
+}
+.textlabel {
+    margin-right: 50px;
+    padding-left: px;
+}
 
 /*Page confirmation de commande*/
-.card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
+
+.textcomm {
+    text-align: center;
 }
