@@ -42,36 +42,36 @@
                 <legend>Formulaire de commande</legend>
                 <div class="form-group">
                     <label class="textlabel" for="firstName">Prénom :</label>
-                    <input type="text" name="firstName" placeholder="Thomas"
+                    <input id="firstName" type="text" name="firstName" placeholder="Thomas"
                         pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ \s]{1,}"
                         title="Contient uniquement des lettres">
                 </div>
                 <div class="form-group">
                     <label class="textlabel" for="lastName">Nom :</label>
-                    <input type="text" name="lastName" placeholder="Pesquet"
+                    <input id="lastName" type="text" name="lastName" placeholder="Pesquet"
                     pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ \s]{1,}"
                     title="Contient uniquement des lettres">
                 </div>
                 <div class="form-group">
                     <label class="textlabel" for="address">Adresse :</label>
-                    <input type="text" name="address" placeholder="Station Orbitale"
+                    <input id="address" type="text" name="address" placeholder="Station Orbitale"
                     pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ 0-9\s]{5,}"
                     title="contient chiffres et lettres">
                 </div>
                 <div class="form-group">
                     <label class="textlabel" for="zip">Code Postal :</label>
-                    <input type="text" name="zip" placeholder="00000" pattern="[0-9]{5}"
+                    <input id="zip" type="text" name="zip" placeholder="00000" pattern="[0-9]{5}"
                         title="Contient uniquement chiffres">
                 </div>
                 <div class="form-group">
-                    <label class="textlabel" for="City">Ville :</label>
-                    <input type="text" name="city" placeholder="Espace"
+                    <label class="textlabel" for="city">Ville :</label>
+                    <input id="city" type="text" name="city" placeholder="Espace"
                         pattern="[A-Za-z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s]{2,}"
                         title="Contient uniquement des lettres">
                 </div>
                 <div class="form-group">
                     <label class="textlabel" for="email">Mail :</label>
-                    <input type="text" name="email" placeholder="thomas.pesquet@mail.com"
+                    <input id="email" type="text" name="email" placeholder="thomas.pesquet@mail.com"
                         pattern="[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$"
                         title="Rentrer une adresse mail valide exemple: email@example.com">
                 </div>
@@ -97,7 +97,7 @@
                 <a href="#legal">Mentions légales</a>
             </li>
             <li class="footerlinks">
-                <a ref="#cgv">CGV</a>
+                <a href="#cgv">CGV</a>
             </li>
             <li class="footerlinks">
                 <a href="#contact">Nous contacter</a>

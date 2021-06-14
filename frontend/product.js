@@ -5,7 +5,6 @@ const queryString_url_id = window.location.search;
 const urlSearchParams = new URLSearchParams(queryString_url_id);
 const id = urlSearchParams.get("id")
 //console.log(id);
-
 async function main() {
     const camera = await getCamera()
     //console.log(camera)
@@ -119,6 +118,4 @@ OK pour aller au panier. ANNULER pour revenir à l'accueil`)){
             }
         });        
 }
-/*fonction auto appellée*/
-/*Requête API*/
 main()

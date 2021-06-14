@@ -30,7 +30,7 @@ if(panier === null || panier == 0 ){
             <p>Prix : ${element.totalPrice}<span>€</span></p>
         </div>
         <div class="buttonx">    
-            <button id="${element.id}" class="btn btn-danger btn-X" type="button">X</button>
+            <button id="${element.id}" class="btn btn-del btn-X" type="button">X</button>
         </div>
     </div>`;
 
@@ -41,7 +41,7 @@ totalCount();
 
 //Suppression article
 function deletearticle() {
-    let btnremove = document.querySelectorAll(".btn-danger");
+    let btnremove = document.querySelectorAll(".btn-del");
     for (let a = 0; a < btnremove.length; a++){
         btnremove[a].addEventListener("click" , (event) =>{
             event.preventDefault(); //pour éviter que le click sur le bouton supprimer ne recharge la page        
@@ -55,7 +55,7 @@ function deletearticle() {
             //supprimer du tableau l'élément d'index a et lui seul
             panier.splice(a, 1);
             console.log(panier);
-            //on envoie la variable dans le local Storage 
+            //on envoie la variable dans le local Storage pour le mettre à jour
             //transformation en format JSON et envoie dans la key "productList" du localStorage
             localStorage.setItem("productList", JSON.stringify(panier));
 
