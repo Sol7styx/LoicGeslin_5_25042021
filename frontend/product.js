@@ -27,7 +27,6 @@ function getCamera() {
 }
 
 //fonction pour multiplier un produit par sa quantité pour obtenir la valeur totale
-
 function totalProductPrice(priceProduct) {
     let amount = document.getElementById("productAmount");
     amount.addEventListener("change", (event) => {
@@ -35,6 +34,7 @@ function totalProductPrice(priceProduct) {
         result.textContent = `${priceProduct}` * `${event.target.value}`;
     });
 }
+
 //fonction pour afficher l'article et les informations liées
 function displayCamera(camera) {
     let priceProduct = camera.price / 100;
@@ -69,7 +69,6 @@ function displayCamera(camera) {
         
         totalProductPrice(priceProduct);
         
-
         //Récupération des données sélectionnées par l'utilisateur et envoie au panier
         //Choix de la lentille par l'utilisateur et des quantités dans les variables
         let lensChoice = document.getElementById("lensSelect");
