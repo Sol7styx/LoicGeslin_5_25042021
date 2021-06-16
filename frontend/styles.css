@@ -265,3 +265,62 @@ label+input {
 .textcomm {
     text-align: center;
 }
+/*---Section Responsive---*/
+@media screen and (max-width: 767px) {
+/*Index*/
+header {
+    flex-direction: column;
+    justify-content: center;
+}
+.allCameras h1 {
+    text-align: center;
+}
+.products {
+    width: 80%;
+}
+footer ul {
+    flex-direction: column;   
+}
+/*Product*/
+.cameraphoto {
+    width: 80%;
+}
+.productsheet {
+    width: 80%;
+}
+/*Panier*/
+#content-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card-cart {
+    width: 80%;
+}
+.cart-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.cardimage {
+    text-align: center;
+    margin: auto;
+    display: flex;
+}
+.imageCard {
+    width: 95%;
+    padding-top: 5px;
+    margin: auto;
+}
+label {
+    display: flex;
+    text-align: center;
+}
+label+input {
+    display: flex;
+    width: 95%;
+}
+.textlabel{
+    width: 80%;
+}
+}

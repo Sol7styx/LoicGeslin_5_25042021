@@ -25,6 +25,16 @@ function getCamera() {
             alert(error)
         })
 }
+
+//fonction pour multiplier un produit par sa quantité pour obtenir la valeur totale
+
+function totalProductPrice(priceProduct) {
+    let amount = document.getElementById("productAmount");
+    amount.addEventListener("change", (event) => {
+        const result = document.getElementById("totalSelectionPrice");
+        result.textContent = `${priceProduct}` * `${event.target.value}`;
+    });
+}
 //fonction pour afficher l'article et les informations liées
 function displayCamera(camera) {
     let priceProduct = camera.price / 100;
@@ -56,15 +66,10 @@ function displayCamera(camera) {
             </form>                    
             </div>
         </div>`;
-        //fonction pour multiplier un produit par sa quantité pour obtenir la valeur totale
+        
         totalProductPrice(priceProduct);
-        function totalProductPrice(priceProduct) {
-            let amount = document.getElementById("productAmount");
-            amount.addEventListener("change", (event) => {
-                const result = document.getElementById("totalSelectionPrice");
-                result.textContent = `${priceProduct}` * `${event.target.value}`;
-            });
-        }
+        
+
         //Récupération des données sélectionnées par l'utilisateur et envoie au panier
         //Choix de la lentille par l'utilisateur et des quantités dans les variables
         let lensChoice = document.getElementById("lensSelect");
@@ -89,13 +94,13 @@ function displayCamera(camera) {
         //fenêtre popup 
         const popupConfirmation = () =>{
             if(window.confirm(`${camera.name} option: ${lensChoice.value} a bien été ajouté au panier
-OK pour aller au panier. ANNULER pour revenir à l'accueil`)){
+OK pour aller au panier. ANNULER pour continuer vos achats`)){
                 window.location.href = "cart.html";
             }else{
                 window.location.href = "index.html";
             }
         }
-        //fonction pour ajouter le produit sélectionné dans le localStorage
+        //Ajouter le produit sélectionné dans le localStorage
         const addProductInLocalStorage = () => {
             productsCart.push(detailsCam); //Ajout dans le tableau de l'objet avec les values choisies
             //Transformation en JSON, puis envoie dnas la key "productList" du local Storage

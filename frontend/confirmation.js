@@ -1,5 +1,6 @@
 // Attribution d'un id pour la commande effectuée
 const orderCart = localStorage.getItem('commande');
+console.log(orderCart);
 const numCommande = JSON.parse(orderCart);
 console.log(numCommande.orderId);
 

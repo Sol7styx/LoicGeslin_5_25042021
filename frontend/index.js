@@ -1,9 +1,3 @@
-//Assigner les propriétés du format json à la class Camera
-class Camera{
-    constructor(jsonCamera){
-        jsonCamera && Object.assign(this, jsonCamera);
-    }
-}
 function productsDisplay() {
 //Requête au serveur et affichage détaillé des caméras.
     fetch('http://localhost:3000/api/cameras')

@@ -22,7 +22,7 @@ if(panier === null || panier == 0 ){
             <img alt="${element.name}" class="imageCard" src="${element.image}">
         </div>
         <div class="cardtext">
-            <a href="product.html?id=${element._id}"><p>${element.name}</p></a>
+            <a href="product.html?id=${element.idCamera}"><p>${element.name}</p></a>
             <p class="text">Quantité : ${element.quantity}</p>
             <p class="text">Objectifs : ${element.lens}</p>
         </div>
@@ -105,8 +105,8 @@ function form() {
             var error_message = document.getElementById("error-message");
             var text;
 
-            if (nameFormat.test(valueForm.get("firstName")) && nameFormat.test(valueForm.get('lastName')) && addressFormat.test(valueForm.get('address')) && zipFormat.test(valueForm.get('zip')) && cityFormat.test(valueForm.get('city')) && emailFormat.test(valueForm.get('email'))) {
-
+            if (nameFormat.test(valueForm.get("firstName")) && nameFormat.test(valueForm.get('lastName')) && addressFormat.test(valueForm.get('address')) 
+                && zipFormat.test(valueForm.get('zip')) && cityFormat.test(valueForm.get('city')) && emailFormat.test(valueForm.get('email'))) {
                 // si le formulaire est bien renseigné pas de message d'erreur
                 text = "";
                 error_message.innerHTML = text;
@@ -153,15 +153,14 @@ function form() {
 
 form();
 
-
 // Fonction envoie de données au serveur 
-function sendData(url, order) {
+function sendData(url, cart) {
     fetch(url, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json;charset=UTF-8'
         },
-        body: JSON.stringify(order)
+        body: JSON.stringify(cart)
 
     }).then(function (response) {
         return response.json();
